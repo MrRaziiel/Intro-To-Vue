@@ -12,21 +12,51 @@
     <div id="app">
       <div class = "nav-bar"></div>
 
-      <div class = "product-display">
+      <div class="cart">Cart({{ cart}})</div>
+
+      <div class="product-display">
         <div class="product-container">
-        <div class="product-image">
+          <div class="product-image">
           <!--image goes here -->
-          <img :src = "image">
+              <img :src="image">
+              </div>
+          <div class="product-info">
+              <h1> {{ product }} </h1>
+              <p v-if = "inventory >10"> In Stock </p>
+              <p v-else-if = "inventory < 10 && inventory > 0 ">Almost sould out </p>
+              <p v-else> Out of Stock </p>
+              <ul>
+                <li v-for="detail in details">{{ detail }}</li>
+              </ul>
+              <div 
+                v-for ="variant in variants" 
+                :key="variant.id" 
+                @mouseover="updateImage(variant.image)"
+                class="color-circle"
+                :style="{backgroundColor: variant.color}">
+              </div>
+              <ul>
+                <li v-for ="size in sizes" style = "display: inline;">/ {{ size }} /</li>
+              </ul>
+              <button 
+                class="button"
+                :class="{ disabledButton : inventory <= 0 } "
+                :disabled="inventory <= 0"
+                v-on:click="addToCart">
+                Add to Cart
+              </button>
+                            <button 
+                class="button"
+                :class="{ disabledButton : cart <= 0 } "
+                :disabled="cart <= 0"
+                v-on:click="removeToCart">
+                Remove Cart
+              </button>
+          </div>
+          </div>
         </div>
-      <div class = "product-info">
-        <h1> {{ product }} </h1>
-      <p v-if = "inventory >10"> In Stock </p>
-      <p v-else-if = "inventory < 10 && inventory > 0 ">Almost sould out </p>
-      <p v-else> Out of Stock </p>
-    </div>
-    </div>
-  </div>
-  </div>
+      </div>
+
 
     <!-- Import app -->
     <script src="./main.js"></script>
