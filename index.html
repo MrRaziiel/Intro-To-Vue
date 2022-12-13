@@ -11,59 +11,18 @@
   <body>
     <div id="app">
       <div class = "nav-bar"></div>
-
-      <div class="cart">Cart({{ cart}})</div>
-
-      <div class="product-display">
-        <div class="product-container">
-          <div class="product-image">
-          <!--image goes here -->
-              <img :src="image">
-              </div>
-          <div class="product-info">
-              <h1> {{ title }} </h1>
-              <p v-if = "inStock"> In Stock </p>
-              <p v-else> Out of Stock </p>
-              <ul>
-                <li v-for="detail in details">{{ detail }}</li>
-              </ul>
-              <div 
-                v-for ="(variant, index) in variants" 
-                :key="variant.id" 
-                @mouseover="updateVariant(index)"
-                class="color-circle"
-                :style="{backgroundColor: variant.color}">
-              </div>
-              <ul>
-                <li v-for ="size in sizes" style = "display: inline;">/ {{ size }} /</li>
-              </ul>
-              <button 
-                class="button"
-                :class="{ disabledButton : inStock } "
-                :disabled="inStock"
-                v-on:click="addToCart">
-                Add to Cart
-              </button>
-                            <button 
-                class="button"
-                :class="{ disabledButton : cart <= 0 } "
-                :disabled="cart <= 0"
-                v-on:click="removeToCart">
-                Remove Cart
-              </button>
-          </div>
-          </div>
-        </div>
+      <div class="cart">Cart({{ cart.length }})</div>
+      <product-display :premium="premium" @add-to-cart="updateCart" @remove-from-cart="removeById"></product-display>
       </div>
-
-
     <!-- Import app -->
     <script src="./main.js"></script>
-
+    <!-- Import Components -->
+    <script src="./src/components/ProductDisplay.js"></script>
+    <script src="./src/components/ReviewForm.js"></script>
+    <script src="./src/components/ReviewList.js"></script>
     <!-- mount app -->
     <script>
       const mountedApp = app.mount('#app')
     </script>
-
   </body>
 </html>
